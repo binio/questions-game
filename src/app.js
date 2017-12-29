@@ -40,10 +40,6 @@ var UIController = (function(){
     };
 
     var addPlayerToUI = function(name,id){
-        //var html = '<div id="player-%id%"><h3>%playerName%</h3></div>';
-        //var newHtml = html.replace('%playerName%', name);
-        //newHtml = newHtml.replace('%id%', id);
-        //document.querySelector(DOMStrings.playerOne).insertAdjacentHTML('beforeend',newHtml);
         var x = document.querySelector(DOMStrings.playerOne);
         var option = document.createElement("option");
         option.text = name;
