@@ -17,11 +17,14 @@ var questionController = (function(){
     };
 
     return {
-        addQuestion: function(q,answers, answer){
+        addQuestion: function(q,answers, answer, player){
             repository.questions.push(new Question(q,answers,answer));
+            repository.players[player].questions.push(new Question(q,answers,answer));
+            //console.log(repository.players[0]);
         },
         addPlayer: function(name, score, qsts){
             repository.players.push(new Player(name, score,qsts));
+            return repository.players.length - 1;
         },
         testing: function(){
             return repository;
@@ -36,9 +39,10 @@ var UIController = (function(){
         'playerInput': 'player'
     };
 
-    var addPlayerToUI = function(name){
-        var html = '<h3>%playerName%</h3>';
+    var addPlayerToUI = function(name,id){
+        var html = '<div id="player-%id%"><h3>%playerName%</h3></div>';
         var newHtml = html.replace('%playerName%', name);
+        newHtml = newHtml.replace('%id%', id);
         document.querySelector(DOMStrings.playerOne).insertAdjacentHTML('beforeend',newHtml);
     };
 
@@ -46,9 +50,9 @@ var UIController = (function(){
         getDOMStrings: function(){
             return DOMStrings;
         },
-        addPlayer: function(name){
+        addPlayer: function(name,id){
             //1. display in UI
-            addPlayerToUI(name);
+            addPlayerToUI(name,id);
         },
         getPlayerInput: function(){
             return document.getElementById(DOMStrings.playerInput).value;
@@ -58,18 +62,28 @@ var UIController = (function(){
 
 var gameController =(function (questionCtrl, uiCtrl) {
     var DOMStrings = uiCtrl.getDOMStrings();
+    var selectedPlayer;
 
     var addPlayer = function(){
+        var input, id;
         //1. get input
-        var input = UIController.getPlayerInput();
+        input = UIController.getPlayerInput();
         //2. add player
-        questionController.addPlayer(input,0,[]);
+        id = questionController.addPlayer(input,0,[]);
         //3. update UI
-        UIController.addPlayer(input);
-    }
+        UIController.addPlayer(input,id);
+    };
+
     var setupEventListeners = function(){
         document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click', addPlayer);
+        document.querySelector(DOMStrings.playerOne).addEventListener('click', function(event){
+            var playerId = event.target.parentNode.id;
+            var splitPlayerId = playerId.split('-');
+            selectedPlayer = splitPlayerId[1];
+            console.log('selected player: '+ selectedPlayer);
+        });
     };
+
     return {
         init : function(){
             console.log('game started....');
@@ -77,7 +91,8 @@ var gameController =(function (questionCtrl, uiCtrl) {
 
         },
         addQuestion: function(question, answers, rightAnswer) {
-            questionController.addQuestion(question,answers,rightAnswer);
+            console.log('selected player:'+ this.selectedPlayer);
+            questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
         }
 
     };
