@@ -32,7 +32,8 @@ var questionController = (function(){
 var UIController = (function(){
     var DOMStrings = {
         'playerOne': '.user-1',
-        'addPlayerBtn': '.add-player'
+        'addPlayerBtn': '.add-player',
+        'playerInput': 'player'
     };
 
     var addPlayerToUI = function(name){
@@ -45,12 +46,12 @@ var UIController = (function(){
         getDOMStrings: function(){
             return DOMStrings;
         },
-        addPlayer: function(name, score, questions){
-            //1. add player to play
-            questionController.addPlayer(name,score,questions);
-            //2. display in UI
+        addPlayer: function(name){
+            //1. display in UI
             addPlayerToUI(name);
-
+        },
+        getPlayerInput: function(){
+            return document.getElementById(DOMStrings.playerInput).value;
         }
     };
 })();
@@ -58,10 +59,16 @@ var UIController = (function(){
 var gameController =(function (questionCtrl, uiCtrl) {
     var DOMStrings = uiCtrl.getDOMStrings();
 
+    var addPlayer = function(){
+        //1. get input
+        var input = UIController.getPlayerInput();
+        //2. add player
+        questionController.addPlayer(input,0,[]);
+        //3. update UI
+        UIController.addPlayer(input);
+    }
     var setupEventListeners = function(){
-        document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click',function(){
-            console.log('player to add');
-        });
+        document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click', addPlayer);
     };
     return {
         init : function(){
@@ -71,10 +78,8 @@ var gameController =(function (questionCtrl, uiCtrl) {
         },
         addQuestion: function(question, answers, rightAnswer) {
             questionController.addQuestion(question,answers,rightAnswer);
-        },
-        addPlayer: function(name,score,questions){
-            UIController.addPlayer(name,score,questions);
         }
+
     };
 
 })(questionController, UIController);
