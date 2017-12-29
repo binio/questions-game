@@ -11,9 +11,22 @@
 </head>
 <body>
 
-<div class="container-fluid">
+<div class="container-inline">
     <h1>Question game:</h1>
-    Player name:<input type="text" id="player"> <input type="button" value="Add player" class="add-player">
+    <div class="row">
+        <div class="col-3">
+            <form class="form-inline">
+
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" id="player" placeholder="Player name:">
+                </div>
+                <button type="button" class="btn btn-primary mb-2 add-player">Add Player</button>
+            </form>
+        </div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+    </div>
     <div class="row">
         <div class="user-1 col-6">1</div>
         <div class="user-2 col-6">2</div>
