@@ -56,6 +56,9 @@ var UIController = (function(){
         },
         getPlayerInput: function(){
             return document.getElementById(DOMStrings.playerInput).value;
+        },
+        selectPlayer: function(playerId){
+            document.getElementById(playerId).classList.add('red');
         }
     };
 })();
@@ -74,14 +77,17 @@ var gameController =(function (questionCtrl, uiCtrl) {
         UIController.addPlayer(input,id);
     };
 
+    var selectPlayer = function(event){
+        var playerId = event.target.parentNode.id;
+        var splitPlayerId = playerId.split('-');
+        selectedPlayer = splitPlayerId[1];
+        UIController.selectPlayer(playerId);
+        console.log('selected player: '+ selectedPlayer);
+    }
+
     var setupEventListeners = function(){
         document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click', addPlayer);
-        document.querySelector(DOMStrings.playerOne).addEventListener('click', function(event){
-            var playerId = event.target.parentNode.id;
-            var splitPlayerId = playerId.split('-');
-            selectedPlayer = splitPlayerId[1];
-            console.log('selected player: '+ selectedPlayer);
-        });
+        document.querySelector(DOMStrings.playerOne).addEventListener('click', selectPlayer);
     };
 
     return {
@@ -91,7 +97,6 @@ var gameController =(function (questionCtrl, uiCtrl) {
 
         },
         addQuestion: function(question, answers, rightAnswer) {
-            console.log('selected player:'+ this.selectedPlayer);
             questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
         }
 
