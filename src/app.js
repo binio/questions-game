@@ -40,7 +40,8 @@ var UIController = (function(){
         'playerOne': '.user-1',
         'addPlayerBtn': '.add-player',
         'playerInput': 'player',
-        'playerSelect':'.player-select'
+        'playerSelect':'.player-select',
+        'userDropDown': 'userDropDown'
     };
 
     var addPlayerToUI = function(name,id){
@@ -96,16 +97,15 @@ var gameController =(function (questionCtrl, uiCtrl) {
     };
 
     var selectPlayer = function(event){
-        var playerId = event.target.parentNode.id;
-        var splitPlayerId = playerId.split('-');
-        selectedPlayer = splitPlayerId[1];
-        UIController.selectPlayer(playerId);
-        console.log('selected player: '+ selectedPlayer);
-    }
+        var index = event.target.selectedIndex;
+        var options = document.getElementById(DOMStrings.userDropDown).options;
+        console.log(options[index].text + ' ' + options[index].value);
+    };
 
     var setupEventListeners = function(){
         document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click', addPlayer);
-        document.querySelector(DOMStrings.playerOne).addEventListener('click', selectPlayer);
+        document.getElementById(DOMStrings.userDropDown).addEventListener('change',selectPlayer);
+
     };
 
     return {
