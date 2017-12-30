@@ -70,6 +70,9 @@ var UIController = (function(){
             } else {
                 playerSelect.hidden = true;
             }
+        },
+        clearPlayerInput: function() {
+            document.getElementById(DOMStrings.playerInput).value = '';
         }
     };
 })();
@@ -88,6 +91,8 @@ var gameController =(function (questionCtrl, uiCtrl) {
         UIController.addPlayer(input,id);
         //4. Show select players
         UIController.displayPlayers(questionController.getNumOfPlayers());
+        //5. Clear player input
+        UIController.clearPlayerInput();
     };
 
     var selectPlayer = function(event){
