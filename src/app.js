@@ -39,6 +39,7 @@ var UIController = (function(){
     var DOMStrings = {
         'playerOne': '.user-1',
         'addPlayerBtn': '.add-player',
+        'addQuestion': '.add-question',
         'playerInput': 'player',
         'playerSelect':'.player-select',
         'userDropDown': 'userDropDown'
