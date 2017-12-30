@@ -26,6 +26,9 @@ var questionController = (function(){
             repository.players.push(new Player(name, score,qsts));
             return repository.players.length - 1;
         },
+        getNumOfPlayers: function(){
+            return repository.players.length;
+        },
         testing: function(){
             return repository;
         }
@@ -36,7 +39,8 @@ var UIController = (function(){
     var DOMStrings = {
         'playerOne': '.user-1',
         'addPlayerBtn': '.add-player',
-        'playerInput': 'player'
+        'playerInput': 'player',
+        'playerSelect':'.player-select'
     };
 
     var addPlayerToUI = function(name,id){
@@ -59,8 +63,13 @@ var UIController = (function(){
         getPlayerInput: function(){
             return document.getElementById(DOMStrings.playerInput).value;
         },
-        selectPlayer: function(playerId){
-            document.getElementById(playerId).classList.add('red');
+        displayPlayers: function(number){
+            var playerSelect = document.querySelector(DOMStrings.playerSelect);
+            if(number > 0){
+                playerSelect.hidden = false;
+            } else {
+                playerSelect.hidden = true;
+            }
         }
     };
 })();
@@ -77,6 +86,8 @@ var gameController =(function (questionCtrl, uiCtrl) {
         id = questionController.addPlayer(input,0,[]);
         //3. update UI
         UIController.addPlayer(input,id);
+        //4. Show select players
+        UIController.displayPlayers(questionController.getNumOfPlayers());
     };
 
     var selectPlayer = function(event){
@@ -94,8 +105,9 @@ var gameController =(function (questionCtrl, uiCtrl) {
 
     return {
         init : function(){
-            console.log('game started....');
+            console.log('game started.....');
             setupEventListeners();
+            UIController.displayPlayers(questionController.getNumOfPlayers());
 
         },
         addQuestion: function(question, answers, rightAnswer) {
