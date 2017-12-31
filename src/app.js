@@ -11,6 +11,8 @@ var questionController = (function(){
         this.questions = questions;
     };
 
+
+
     var repository = {
         questions: [],
         players:[]
@@ -43,6 +45,7 @@ var UIController = (function(){
         'playerInput': 'player',
         'playerSelect':'.player-select',
         'userDropDown': 'userDropDown',
+        'questionBody': 'questionBody'
 
     };
 
@@ -53,6 +56,7 @@ var UIController = (function(){
         option.value = id;
         x.add(option,x[0]);
         x.selectedIndex = x[0];
+        option.selected = true;
     };
 
     return {
@@ -110,13 +114,17 @@ var gameController =(function (questionCtrl, uiCtrl) {
     };
 
     var addQuestion = function() {
+        var playerId, questionObj, questionBody;
         //1.get active player
-        var playerId = selectedPlayer;
-        console.log('player index:'+playerId);
+        playerId = selectedPlayer;
         //2.get question
+        questionBody = document.getElementById(DOMStrings.questionBody).value;
         //3.get answers
-        //4.prepare Question object
-        //5.add question to collection and user
+
+        //4.prepare Question object and add to collection
+        console.log('player-id:'+playerId);
+        questionObj = questionCtrl.addQuestion(questionBody,[],1,playerId);
+
         //questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
     };
 
