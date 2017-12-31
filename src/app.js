@@ -11,11 +11,11 @@ var questionController = (function(){
         this.questions = questions;
     };
 
-
-
     var repository = {
         questions: [],
-        players:[]
+        players:[],
+        tempAnswers:[],
+        tempCorrectAnswer:0
     };
 
     return {
@@ -30,6 +30,12 @@ var questionController = (function(){
         },
         getNumOfPlayers: function(){
             return repository.players.length;
+        },
+        addAnswer: function(answer) {
+            repository.tempAnswers.push(answer);
+        },
+        clearTempAnswers: function() {
+            repository.tempAnswers = [];
         },
         testing: function(){
             return repository;
