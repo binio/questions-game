@@ -77,7 +77,7 @@ var UIController = (function(){
         clearPlayerInput: function() {
             document.getElementById(DOMStrings.playerInput).value = '';
         },
-        addQuestion: function(){
+        getActivePlayer: function(){
 
         }
     };
@@ -101,15 +101,28 @@ var gameController =(function (questionCtrl, uiCtrl) {
         UIController.clearPlayerInput();
     };
 
-    var selectPlayer = function(event){
+    var selectedPlayer = function(event){
         var index = event.target.selectedIndex;
         var options = document.getElementById(DOMStrings.userDropDown).options;
-        console.log(options[index].text + ' ' + options[index].value);
+        selectedPlayer = options[index].value;
+        console.log('selectedPlayer: '+selectedPlayer);
+        return  options[index].value;
+    };
+
+    var addQuestion = function() {
+        //1.get active player
+        var playerId = selectedPlayer;
+        console.log('player index:'+playerId);
+        //2.get question
+        //3.get answers
+        //4.prepare Question object
+        //5.add question to collection and user
+        //questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
     };
 
     var setupEventListeners = function(){
         document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click', addPlayer);
-        document.getElementById(DOMStrings.userDropDown).addEventListener('change',selectPlayer);
+        document.getElementById(DOMStrings.userDropDown).addEventListener('change',selectedPlayer);
         document.getElementById(DOMStrings.addQuestionBtn).addEventListener('click', addQuestion);
 
     };
@@ -120,15 +133,8 @@ var gameController =(function (questionCtrl, uiCtrl) {
             setupEventListeners();
             UIController.displayPlayers(questionController.getNumOfPlayers());
 
-        },
-        addQuestion: function() {
-            //1.get active user
-            //2.get question
-            //3.get answers
-            //4.prepare Question object
-            //5.add question to collection and user
-            //questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
         }
+
 
     };
 
