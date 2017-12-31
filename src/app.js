@@ -39,10 +39,11 @@ var UIController = (function(){
     var DOMStrings = {
         'playerOne': '.user-1',
         'addPlayerBtn': '.add-player',
-        'addQuestion': '.add-question',
+        'addQuestionBtn': 'add-question-btn',
         'playerInput': 'player',
         'playerSelect':'.player-select',
-        'userDropDown': 'userDropDown'
+        'userDropDown': 'userDropDown',
+
     };
 
     var addPlayerToUI = function(name,id){
@@ -75,6 +76,9 @@ var UIController = (function(){
         },
         clearPlayerInput: function() {
             document.getElementById(DOMStrings.playerInput).value = '';
+        },
+        addQuestion: function(){
+
         }
     };
 })();
@@ -106,6 +110,7 @@ var gameController =(function (questionCtrl, uiCtrl) {
     var setupEventListeners = function(){
         document.querySelector(DOMStrings.addPlayerBtn).addEventListener('click', addPlayer);
         document.getElementById(DOMStrings.userDropDown).addEventListener('change',selectPlayer);
+        document.getElementById(DOMStrings.addQuestionBtn).addEventListener('click', addQuestion);
 
     };
 
@@ -116,8 +121,13 @@ var gameController =(function (questionCtrl, uiCtrl) {
             UIController.displayPlayers(questionController.getNumOfPlayers());
 
         },
-        addQuestion: function(question, answers, rightAnswer) {
-            questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
+        addQuestion: function() {
+            //1.get active user
+            //2.get question
+            //3.get answers
+            //4.prepare Question object
+            //5.add question to collection and user
+            //questionController.addQuestion(question,answers,rightAnswer,selectedPlayer);
         }
 
     };
